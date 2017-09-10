@@ -84,7 +84,8 @@ namespace UWPSoundBoard
             // which means they are neither some texts nor something from other apps
             if (e.DataView.Contains(StandardDataFormats.StorageItems))
             {
-                var items = await e.DataView.GetStorageItemsAsync(); //get all items reference
+                // get all items reference
+                var items = await e.DataView.GetStorageItemsAsync(); 
                 // check whether there's something in items
                 if (items.Any())
                 {
