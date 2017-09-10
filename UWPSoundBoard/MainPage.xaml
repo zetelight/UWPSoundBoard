@@ -5,9 +5,99 @@
     xmlns:local="using:UWPSoundBoard"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data ="using:UWPSoundBoard.Model"
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <RelativePanel>
+            <Button Name="HamburgerButton" 
+                    RelativePanel.AlignLeftWithPanel="True"
+                    FontFamily="Segoe MDL2 Assets"
+                    Content="&#xE700;"
+                    Click="HamburgerButton_Click"
+                    Height="45"
+                    Width="45"
+                    FontSize="20"/>
+            
+            <Button RelativePanel.RightOf="HamburgerButton"
+                    Name="BackButton"
+                    FontFamily="Segoe MDL2 Assets"
+                    Content="&#xE0A6;"
+                    Click="BackButton_Click"
+                    Height="45"
+                    Width="45"
+                    FontSize="20"/>
+            
+            <AutoSuggestBox QueryIcon="Find" 
+                            Name="SearchAutoSuggestBox"
+                            RelativePanel.AlignRightWithPanel="True"
+                            PlaceholderText="Search for sounds"
+                            Width="200"
+                            Margin="0,5,5,0"
+                            TextChanged="SearchAutoSuggestBox_TextChanged"
+                            QuerySubmitted="SearchAutoSuggestBox_QuerySubmitted"/>
+        </RelativePanel>
+
+        <SplitView Name="MySplitView"
+                   DisplayMode="CompactOverlay"
+                   CompactPaneLength="45"
+                   OpenPaneLength="200"
+                   Grid.Row="1">
+
+            <SplitView.Pane>
+                <ListView Name="MenuItemsListView" 
+                          IsItemClickEnabled="True" 
+                          ItemClick="MenuItemsListView_ItemClick"
+                          ItemsSource="{x:Bind MenuItems}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:MenuItem">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{x:Bind IconFile}" 
+                                       Height="35" 
+                                       Width="35"
+                                       Margin="-10,10,0,10"/>
+                                <TextBlock Text="{x:Bind Category}" 
+                                           FontSize="18" 
+                                           Margin="10,0,0,0"
+                                           VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Grid Margin="20,20,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <MediaElement Name="MyMediaElement" AutoPlay="True"/>
+
+                    <TextBlock Name="CategoryTextBlock" Text="All Sounds" FontSize="24"/>
+
+                    <GridView Grid.Row="1" 
+                              Name="SoundGridView"
+                              SelectionMode="None"
+                              IsItemClickEnabled="True"
+                              ItemClick="SoundGridView_ItemClick"
+                              AllowDrop="True"
+                              Drop="SoundGridView_Drop"
+                              DragOver="SoundGridView_DragOver"
+                              ItemsSource="{x:Bind Sounds}"> <!--the Sounds is the varible we defined in Mainpage.xmal.cs-->
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="data:Sound"> <!--the Sound is what we defined in Model-->
+                                <Image Name="MyImage" Height="100" Width="100" Source="{x:Bind ImageFile}"/>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
     </Grid>
 </Page>
