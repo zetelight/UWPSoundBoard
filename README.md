@@ -10,6 +10,7 @@
   * In Mainpage.xaml, viewcontrol bind data. Note: data source from Mainpage.xmal.cs, data type from Models folder.
   * In Models folder, we create data and data manager to manage these data.
   * In Mainpage.xmal.cs, we initialze some data and operate them with methods from Models folder and perform these data in Mainpage.xaml
+  * View and ViewModel are two-ways, ViewModel and Model are two ways. But there is not connection between View and Model
 - learn LinQ further so that this project helps me be skilled to use them.
 - learn how to package an app and customize some features/compatibility..etc. Finally publish app on Win10 Store.
 
